@@ -4,6 +4,7 @@ import { Box, BoxProps } from "@mui/system";
 
 export const InputsBox = styled(Box)<BoxProps>(({ theme }) => ({
   display: "flex",
+  margin: 20,
   flexDirection: "column",
   alignItems: "flex-start",
   gap: 10,

@@ -1,36 +1,39 @@
-import {createContext, ReactNode, useReducer, useState} from 'react';
-import { ITask, taskReducer } from '../reducer';
-import { ActionTypes } from '../reducer/actions';
+import { createContext, ReactNode, useReducer, useState } from "react";
+import { ITask, taskReducer } from "../reducer";
+import { ActionTypes } from "../reducer/actions";
+import {v4} from 'uuid';
 
 interface TaskContext {
-  tasks: ITask[]
-  handleDeleteTask: (title: string) => void;
+  tasks: ITask[];
+  handleCreateNewTask: (data: ITask) => void;
+  handleDeleteTask: (id: string | undefined) => void;
 }
 
 interface TaskProvider {
-  children: ReactNode
+  children: ReactNode;
 }
 
-export const TaskContext = createContext({} as TaskContext)
+export const TaskContext = createContext({} as TaskContext);
 
-export function TaskProvider({children}: TaskProvider) {
-
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskDesc, setTaskDesc] = useState("");
-
+export function TaskProvider({ children }: TaskProvider) {
   const [tasks, dispatch] = useReducer(taskReducer, []);
 
-  const handleCreateNewTask = (title: string, desc: string): void => {
-    dispatch({type: ActionTypes.ADD_TASK, title: title, desc: desc})
+  const handleCreateNewTask = (data: ITask) => {
+    dispatch({
+      type: ActionTypes.ADD_TASK,
+      title: data.title,
+      desc: data.desc,
+    });
+    console.log(tasks)
   };
 
-  const handleDeleteTask = (title: string) => {
-    dispatch({type: ActionTypes.DELETE_TASK, title: title})
-  }
+  const handleDeleteTask = (id: string | undefined) => {
+    dispatch({ type: ActionTypes.DELETE_TASK, id: id });
+  };
 
   return (
-    <TaskContext.Provider value={{ tasks, handleDeleteTask }}>
+    <TaskContext.Provider value={{ tasks, handleDeleteTask, handleCreateNewTask }}>
       {children}
     </TaskContext.Provider>
-  )
+  );
 }
