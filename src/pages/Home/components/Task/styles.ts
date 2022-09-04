@@ -1,17 +1,33 @@
 import styled from "@emotion/styled";
-import { Paper, PaperProps } from "@mui/material";
+import { ButtonProps, Paper, PaperProps } from "@mui/material";
+import { Box, BoxProps } from "@mui/system";
+import { PurpleButton } from "../../../../styles/global";
 
-export const TaskBox = styled(Paper)<PaperProps>(({theme}) => ({
-  margin: "20px 0",
+export const TaskBox = styled(Paper)<PaperProps>(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  listStyleType: "none",
+  
+  margin: "0.9375rem 0",
   background: "transparent",
-  padding: "15px 20px",
-  margin: 20,
+  padding: "0.9375rem 1.25rem",
   color: "white",
   border: "1px solid #9c27b0",
   alignSelf: "flex-start",
+}));
 
-  "button": {
-    marginTop: 20,
-    color: "white"
-  }
+export const AlterTask = styled(Box)<BoxProps>(() => ({
+  display: "flex",
+  alignItems: "center",
+  gap: 10
 }))
+
+export const EditTask = styled(PurpleButton)<ButtonProps>(() => ({
+  height: "2.625rem",
+  width: "100%"
+}))
+
+export const DeleteTask = styled(PurpleButton)<ButtonProps>(() => ({
+  height: "2.625rem",
+}));

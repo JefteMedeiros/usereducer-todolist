@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { ButtonProps } from "@mui/material";
+import { ButtonProps, TextField, TextFieldProps } from "@mui/material";
 import { Box, BoxProps } from "@mui/system";
 import { PurpleButton } from "../../../../styles/global";
 
@@ -21,18 +21,40 @@ export const InputsBox = styled(Box)<BoxProps>(() => ({
   borderRadius: 8
 }));
 
+export const Input = styled(TextField)<TextFieldProps>(() => ({
+  ".MuiFormLabel-root": {
+    color: "white"
+  },
+  ".MuiInputBase-root": {
+    color: "white"
+  },
+  "& .MuiOutlinedInput-root": {
+    "& fieldset": {
+      borderColor: "#9c27b0",
+    },
+    "&:hover fieldset": {
+      borderColor: "#9c27b0",
+    },
+    "&.Mui-focused fieldset": {
+      borderColor: "#9c27b0",
+    },
+  },
+  width: "100%",
+}));
+
 export const Footer = styled(Box)<BoxProps>(() => ({
   width: "100%",
   display: "flex",
   gap: 10
 }));
 
-export const CreateTask = styled(PurpleButton)<ButtonProps>(() => ({
-  maxWidth: "50%",
-  width: "100%"
-}))
-
 export const CloseButton = styled(PurpleButton)<ButtonProps>(() => ({
   maxWidth: "50%",
   width: "100%"
+}));
+
+export const OpenModal = styled(PurpleButton)<ButtonProps>(() => ({
+  maxWidth: "100%",
+  height: "3.5rem",
+  width: "25%",
 }));

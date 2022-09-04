@@ -8,5 +8,10 @@ export const defaultTheme = createTheme({
     secondary: {
       main: "#000"
     }
+  },
+  typography: {
+    fontFamily: [
+      "Montserrat"
+    ].join(",")
   }
 });

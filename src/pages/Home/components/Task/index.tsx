@@ -1,6 +1,7 @@
-import { Typography } from "@mui/material";
+import { Trash } from 'phosphor-react'
+import { Box, Typography } from "@mui/material";
 import { PurpleButton } from "../../../../styles/global";
-import { TaskBox } from "./styles";
+import { AlterTask, DeleteTask, EditTask, TaskBox } from "./styles";
 
 interface TaskProps {
   id: string | undefined;
@@ -9,14 +10,21 @@ interface TaskProps {
   handleDeleteTask: (id: string | undefined) => void;
 }
 
-export function Task({id, title, desc, handleDeleteTask}: TaskProps) {
+export function Task({ id, title, desc, handleDeleteTask }: TaskProps) {
   return (
     <TaskBox>
-      <Typography variant="h5">{title}</Typography>
-      <Typography variant="h6">{desc}</Typography>
-      <PurpleButton color="secondary" onClick={() => handleDeleteTask(id)}>
-        Deletar task
-      </PurpleButton>
+      <Box>
+        <Typography variant="h6">{title}</Typography>
+        <Typography variant="subtitle1">- {desc}</Typography>
+      </Box>
+      <AlterTask>
+        <DeleteTask color="secondary" onClick={() => handleDeleteTask(id)}>
+          <Trash size={20} />
+        </DeleteTask>
+        <EditTask>
+          Edit task
+        </EditTask>
+      </AlterTask>
     </TaskBox>
   );
 }

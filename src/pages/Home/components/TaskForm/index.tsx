@@ -1,29 +1,31 @@
 import { useForm } from "react-hook-form";
-import { PurpleButton } from "../../../../styles/global";
-import { InputsBox, Input } from "./styles";
-import * as zod from 'zod';
+import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useContext } from "react";
 import { TaskContext } from "../../../../contexts";
+import { InputsBox, CloseButton, CreateTask, Footer } from "./styles";
+import { Input } from "../../../../styles/global";
 
 export function TaskForm() {
-  const { handleCreateNewTask } = useContext(TaskContext);
-  
+  const { handleToggleModal, handleCreateNewTask } = useContext(TaskContext);
+
   const taskValidationSchema = zod.object({
-    title: zod.string().min(2, "The title should have at least 2 characters"),
-    desc: zod.string()
+    title: zod.string().min(1, "The title should not be empty"),
+    desc: zod.string().min(1, "The description should not be empty"),
   });
 
-  type TaskInputs = zod.infer<typeof taskValidationSchema>
-  
-  const {register, handleSubmit, reset} = useForm<TaskInputs>({
-    resolver: zodResolver(taskValidationSchema)
-  })
+  type TaskInputs = zod.infer<typeof taskValidationSchema>;
+
+  const { register, handleSubmit, reset } = useForm<TaskInputs>({
+    resolver: zodResolver(taskValidationSchema),
+  });
 
   const handleCreateTask = (data: TaskInputs) => {
     handleCreateNewTask(data);
-  }
-  
+    handleToggleModal();
+    reset();
+  };
+
   return (
     <form onSubmit={handleSubmit(handleCreateTask)}>
       <InputsBox>
@@ -34,17 +36,17 @@ export function TaskForm() {
           variant="outlined"
         />
         <Input
-        {...register("desc")}
+          {...register("desc")}
           label="Descrição da task"
           type="text"
           variant="outlined"
         />
-        <PurpleButton
-          type="submit"
-          variant="outlined"
-        >
-          Criar task
-        </PurpleButton>
+        <Footer>
+          <CreateTask type="submit" variant="outlined">
+            Criar task
+          </CreateTask>
+          <CloseButton onClick={() => handleToggleModal()}>Fechar</CloseButton>
+        </Footer>
       </InputsBox>
     </form>
   );
