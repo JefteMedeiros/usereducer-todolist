@@ -1,14 +1,13 @@
 import { createContext, ReactNode, useReducer, useState } from "react";
 import { ITask, taskReducer } from "../reducer";
-import { ActionTypes } from "../reducer/actions";
+import { ActionTypes } from "../reducer/functions";
 
 interface TaskContext {
   tasks: ITask[];
-  openModal: boolean;
   search: string;
-  handleCreateNewTask: (data: ITask) => void;
-  handleDeleteTask: (id: string | undefined) => void;
-  handleToggleModal: () => void;
+  createNewTask: (data: ITask) => void;
+  handleDeleteTask: (id: string) => void;
+  editTask: (id: string, data: ITask) => void;
   handleSetSearch: (search: string) => void;
   searchTask: (title: string, search: string) => void;
 }
@@ -22,11 +21,7 @@ export const TaskContext = createContext({} as TaskContext);
 export function TaskProvider({ children }: TaskProvider) {
   const [tasks, dispatch] = useReducer(taskReducer, []);
 
-  const [openModal, setOpenModal] = useState(false);
-  
-  const handleToggleModal = () => setOpenModal(!openModal);
-  
-  const handleCreateNewTask = (data: ITask) => {
+  const createNewTask = (data: ITask) => {
     dispatch({
       type: ActionTypes.ADD_TASK,
       title: data.title,
@@ -35,20 +30,29 @@ export function TaskProvider({ children }: TaskProvider) {
     console.log(tasks);
   };
 
-  const handleDeleteTask = (id: string | undefined) => {
+  const handleDeleteTask = (id: string) => {
     dispatch({ type: ActionTypes.DELETE_TASK, id: id });
+  };
+
+  const editTask = (id: string, data: ITask) => {
+    dispatch({
+      type: ActionTypes.EDIT_TASK,
+      id: id,
+      title: data.title,
+      desc: data.desc
+    });
   };
 
   const [search, setSearch] = useState("");
 
   const handleSetSearch = (search: string) => {
-    setSearch(search)
-  }
+    setSearch(search);
+  };
 
   const searchTask = (title: string, search: string) => {
     const titleLower = title.toLowerCase();
     const searchLower = search.toLowerCase();
-    return searchLower.includes(titleLower);
+    return titleLower.includes(searchLower);
   };
 
   return (
@@ -56,12 +60,11 @@ export function TaskProvider({ children }: TaskProvider) {
       value={{
         tasks,
         search,
-        openModal,
         handleDeleteTask,
-        handleCreateNewTask,
-        handleToggleModal,
+        editTask,
+        createNewTask,
         handleSetSearch,
-        searchTask
+        searchTask,
       }}
     >
       {children}

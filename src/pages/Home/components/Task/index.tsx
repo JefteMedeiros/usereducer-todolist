@@ -1,13 +1,16 @@
 import { Trash } from 'phosphor-react'
 import { Box, Typography } from "@mui/material";
-import { PurpleButton } from "../../../../styles/global";
-import { AlterTask, DeleteTask, EditTask, TaskBox } from "./styles";
+import { AlterTask, DeleteTask, TaskBox } from "./styles";
+import { ITask } from '../../../../reducer';
+import { EditTaskModal } from '../Modals/EditTaskModal';
 
 interface TaskProps {
-  id: string | undefined;
+  id: string;
   title: string;
   desc: string | undefined;
-  handleDeleteTask: (id: string | undefined) => void;
+  data?: ITask;
+  handleDeleteTask: (id: string) => void;
+  editTask: (id: string, data: ITask) => void;
 }
 
 export function Task({ id, title, desc, handleDeleteTask }: TaskProps) {
@@ -21,9 +24,7 @@ export function Task({ id, title, desc, handleDeleteTask }: TaskProps) {
         <DeleteTask color="secondary" onClick={() => handleDeleteTask(id)}>
           <Trash size={20} />
         </DeleteTask>
-        <EditTask>
-          Edit task
-        </EditTask>
+        <EditTaskModal id={id} />
       </AlterTask>
     </TaskBox>
   );

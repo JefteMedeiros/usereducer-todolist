@@ -15,6 +15,12 @@ export const TaskBox = styled(Paper)<PaperProps>(() => ({
   color: "white",
   border: "1px solid #9c27b0",
   alignSelf: "flex-start",
+
+  "@media screen and (max-width: 600px)": {
+    alignItems: "flex-start",
+    gap: 15,
+    flexDirection: "column"
+  }
 }));
 
 export const AlterTask = styled(Box)<BoxProps>(() => ({

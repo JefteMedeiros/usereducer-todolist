@@ -12,6 +12,6 @@ export const defaultTheme = createTheme({
   typography: {
     fontFamily: [
       "Montserrat"
-    ].join(",")
+    ].join(","),
   }
 });
